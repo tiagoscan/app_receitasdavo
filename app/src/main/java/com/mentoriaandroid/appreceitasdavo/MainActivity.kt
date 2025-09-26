@@ -1,5 +1,6 @@
 package com.mentoriaandroid.appreceitasdavo
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -26,14 +27,27 @@ class MainActivity : AppCompatActivity() {
         rvReceitas = findViewById(R.id.rv_receitas)
 
         val lista = listOf(
-            Receita("Escondidinho de camarão", "25 min", R.drawable.ic_launcher_background),
-            Receita("Panqueca de carne moída", "10 min", R.drawable.ic_launcher_background),
-            Receita("Rocambole de carne moída", "35 min", R.drawable.ic_launcher_background),
-            Receita("Escondidinho de carne seca", "42 min", R.drawable.ic_launcher_background)
+            Receita("Escondidinho de camarão", "25 min", R.drawable.ic_launcher_background,
+            listOf("1KG de camarao", "Manteiga", "alho", "cebola")
+            ),
+            Receita("Panqueca de carne moída", "10 min", R.drawable.ic_launcher_background,
+                listOf("1KG de picanha", "Manteiga", "alho", "cebola")
+            ),
+            Receita("Rocambole de carne moída", "35 min", R.drawable.ic_launcher_background,
+                listOf("1KG de moida", "Manteiga", "alho", "cebola")
+            ),
+            Receita("Escondidinho de carne seca", "42 min", R.drawable.ic_launcher_background,
+                listOf("1KG de carne seca", "Manteiga", "alho", "cebola")
+            )
         )
 
         //Adapter
-        receitasAdapter = ReceitasAdapter()//ReceitasAdapter, Adapter
+        //ReceitasAdaptaer, Adapter
+        receitasAdapter = ReceitasAdapter { receita ->
+            val intent = Intent(this, DetalhesActivity::class.java)
+            intent.putExtra("receita", receita)
+            startActivity( intent )
+        }
         rvReceitas.adapter = receitasAdapter
         receitasAdapter.configurarLista( lista )
 
